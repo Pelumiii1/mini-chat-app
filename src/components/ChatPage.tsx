@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
-import Message from './Message';
-import MessageInput from './MessageInput';
+import React, { useState, useEffect, useRef } from "react";
+import Message from "./Message";
+import MessageInput from "./MessageInput";
 
 interface ChatPageProps {
   username: string;
@@ -18,7 +18,7 @@ const ChatPage: React.FC<ChatPageProps> = ({ username }) => {
   const typingTimeoutRef = useRef<number | null>(null);
 
   useEffect(() => {
-    const storedMessages = localStorage.getItem('chat_messages');
+    const storedMessages = localStorage.getItem("chat_messages");
     if (storedMessages) {
       setMessages(JSON.parse(storedMessages));
     }
@@ -32,7 +32,7 @@ const ChatPage: React.FC<ChatPageProps> = ({ username }) => {
     };
     const updatedMessages = [...messages, newMessage];
     setMessages(updatedMessages);
-    localStorage.setItem('chat_messages', JSON.stringify(updatedMessages));
+    localStorage.setItem("chat_messages", JSON.stringify(updatedMessages));
     if (typingTimeoutRef.current) {
       clearTimeout(typingTimeoutRef.current);
     }
@@ -54,9 +54,16 @@ const ChatPage: React.FC<ChatPageProps> = ({ username }) => {
       <div className="chat-header">Mini Chat App</div>
       <div className="messages-container">
         {messages.map((msg) => (
-          <Message key={msg.id} user={msg.user} text={msg.text} currentUser={username} />
+          <Message
+            key={msg.id}
+            user={msg.user}
+            text={msg.text}
+            currentUser={username}
+          />
         ))}
-        {typingUser && typingUser !== username && <div className="typing-indicator">{typingUser} is typing...</div>}
+        {typingUser && (
+          <div className="typing-indicator">{typingUser} is typing...</div>
+        )}
       </div>
       <MessageInput onSendMessage={handleSendMessage} onTyping={handleTyping} />
     </div>
